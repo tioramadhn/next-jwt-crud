@@ -78,3 +78,19 @@ export default function EditStudent({ student }) {
         </>
     )
 }
+
+export const getServerSideProps = async (ctx) => {
+    const token = ctx.req.cookies.jwt;
+    if (token) {
+        return {
+            redirect: {
+                destination: `/`,
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {}
+    }
+}

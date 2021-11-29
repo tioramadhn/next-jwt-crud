@@ -37,7 +37,7 @@ export default function Signup({ }) {
         setStatus({ ...status, isLoading: false })
         setStatus({ ...status, isSuccess: true })
 
-        if (status.isSuccess) Router.push('${process.env.NEXT_PUBLIC_ORIGIN}');
+        if (status.isSuccess) Router.push(`${process.env.NEXT_PUBLIC_ORIGIN}`);
         // console.log(res)
 
 
