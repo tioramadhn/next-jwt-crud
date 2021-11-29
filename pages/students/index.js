@@ -6,7 +6,7 @@ import { useGetStudentsQuery } from '../../redux/services/studentService';
 
 export const getServerSideProps = async () => {
     // const { data, isError, isLoading } = useGetStudentsQuery('');
-    const req = await fetch('http://localhost:3000/api/students')
+    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`)
     const res = await req.json()
     // console.log(res);
     return {
