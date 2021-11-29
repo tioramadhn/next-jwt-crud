@@ -16,15 +16,18 @@ export default function Hero() {
                         <Typography variant='subtitle1'>
                             Sistem informasi yang terintegarasi antara Guru dan Siswa
                         </Typography>
-                        <a href='/students' >
-                            <Button
-                                sx={{ width: `${8 * 12}px` }}
-                                variant='contained'
-                                endIcon={<ArrowForwardIosRounded fontSize='small' />}
-                            >
-                                View
-                            </Button>
-                        </a>
+                        <Link href='/students' >
+                            <a>
+
+                                <Button
+                                    sx={{ width: `${8 * 12}px` }}
+                                    variant='contained'
+                                    endIcon={<ArrowForwardIosRounded fontSize='small' />}
+                                >
+                                    View
+                                </Button>
+                            </a>
+                        </Link>
                     </Stack>
                 </Grid>
             </Grid>
