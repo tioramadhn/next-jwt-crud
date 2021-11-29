@@ -23,7 +23,7 @@ export default function Signup({ }) {
 
         setStatus({ ...status, isLoading: true })
 
-        const req = await fetch(`http://localhost:3000/api/auth`, {
+        const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
