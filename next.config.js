@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    MONGO_URI: "mongodb://127.0.0.1:27017/tiodb"
+    MONGO_URI: "mongodb://tioramadhn:mongodb@cluster0-shard-00-00.gduwf.mongodb.net:27017,cluster0-shard-00-01.gduwf.mongodb.net:27017,cluster0-shard-00-02.gduwf.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-8m45f7-shard-0&authSource=admin&retryWrites=true&w=majority"
   },
   concurrentFeatures: false
 }
