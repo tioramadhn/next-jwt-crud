@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import BasicCard from '../../components/Card';
 import { useGetStudentsQuery } from '../../redux/services/studentService';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
     const token = ctx.req.cookies.jwt;
     if (!token) {
         return {
