@@ -16,7 +16,7 @@ export default function Hero() {
                         <Typography variant='subtitle1'>
                             Sistem informasi yang terintegarasi antara Guru dan Siswa
                         </Typography>
-                        <Link href='/students'>
+                        <Link href='/students' passHref>
                             <Button
                                 sx={{ width: `${8 * 12}px` }}
                                 variant='contained'
