@@ -6,7 +6,7 @@ import Router from 'next/router'
 
 export const getServerSideProps = async (ctx) => {
     const { query } = ctx;
-    const req = await fetch(`http://localhost:3000/api/students/${query.id}`)
+    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${query.id}`)
     const res = await req.json();
     // console.log(res)
     return {
@@ -32,7 +32,7 @@ export default function EditStudent({ student }) {
     const handleSave = async (e) => {
         e.preventDefault();
         setStatus({ ...status, isLoading: true })
-        const req = await fetch(`http://localhost:3000/api/students/${student._id}`, {
+        const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${student._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
