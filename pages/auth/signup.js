@@ -37,7 +37,7 @@ export default function Signup({ }) {
         setStatus({ ...status, isLoading: false })
         setStatus({ ...status, isSuccess: true })
 
-        if (status.isSuccess) Router.push('/');
+        if (status.isSuccess) Router.push('${process.env.NEXT_PUBLIC_ORIGIN}');
         // console.log(res)
 
 
@@ -77,7 +77,7 @@ export const getServerSideProps = async (ctx) => {
     if (token) {
         return {
             redirect: {
-                destination: '/',
+                destination: `${process.env.NEXT_PUBLIC_ORIGIN}`,
                 permanent: false,
             },
         }
