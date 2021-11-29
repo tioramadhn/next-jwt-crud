@@ -9,7 +9,7 @@ export const getServerSideProps = async (ctx) => {
     if (!token) {
         return {
             redirect: {
-                destination: `/`,
+                destination: '/',
                 permanent: false,
             },
         }
