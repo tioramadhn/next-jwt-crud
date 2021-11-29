@@ -9,7 +9,7 @@ export default function Header({ }) {
 
     useEffect(() => {
         const handleToken = async () => {
-            const req = await fetch('http://localhost:3000/api/tokens')
+            const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/tokens`)
             const res = await req.json();
             setToken(res)
         }
