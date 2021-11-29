@@ -14,7 +14,7 @@ export const getServerSideProps = async () => {
     }
 }
 
-export default function students({ data }) {
+export default function Students({ data }) {
     // const [student, setStudent] = useState([]);
 
 

@@ -24,7 +24,7 @@ export default function Header({ }) {
         <Box sx={{ flexGrow: 1, mb: 1 }}>
             <AppBar position="sticky" color="primary" elevation={0}>
                 <Toolbar>
-                    <Link href="/" >
+                    <Link href="/" passHref >
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
                             Student Portal
                         </Typography>
@@ -34,8 +34,8 @@ export default function Header({ }) {
                             Halo, User
                         </Typography></Button>)
                         : (<>
-                            <Link href="/auth/login" ><Button sx={{ mr: 1 }} color="inherit" >Login</Button></Link>
-                            <Link href="/auth/signup" ><Button color="inherit" variant="outlined">Sign up</Button></Link>
+                            <Link href="/auth/login" passHref><Button sx={{ mr: 1 }} color="inherit" >Login</Button></Link>
+                            <Link href="/auth/signup" passHref><Button color="inherit" variant="outlined">Sign up</Button></Link>
                         </>)}
                 </Toolbar>
             </AppBar>

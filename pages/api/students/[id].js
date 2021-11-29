@@ -3,7 +3,7 @@ import Student from '../../../models/Student';
 
 dbConnect();
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     const {
         query: { id },
         method

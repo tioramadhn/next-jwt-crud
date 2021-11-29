@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
 
-export default function signup({ }) {
+export default function Signup({ }) {
     const [field, setField] = useState({})
     const [status, setStatus] = useState({
         isError: false,

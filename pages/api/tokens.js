@@ -1,7 +1,7 @@
 // import cookies from 'next-cookies'
 import cookieParser from "cookie-parser"
 
-export default async (req, res) => {
+export default async function handler(req, res) {
     cookieParser()
     const allCookies = req.cookies
     // console.log(allCookies.jwt)

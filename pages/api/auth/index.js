@@ -6,7 +6,7 @@ import cookie from 'js-cookie'
 import { serialize } from 'cookie';
 dbConnect();
 
-export default async (req, res) => {
+export default async function handler(req, res) {
 
     const { method } = req;
 

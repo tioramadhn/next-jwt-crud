@@ -14,7 +14,7 @@ export const getServerSideProps = async (ctx) => {
     }
 }
 
-export default function editStudent({ student }) {
+export default function EditStudent({ student }) {
     const [field, setField] = useState({})
     const [status, setStatus] = useState({
         isError: false,
