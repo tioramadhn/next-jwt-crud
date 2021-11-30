@@ -1,42 +1,24 @@
 import { AppBar, Button, Toolbar, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useContext } from "react"
+import { AuthContext } from "../../stores/authContext"
 
 
 export default function Header({ }) {
-    const [token, setToken] = useState('')
-
-    useEffect(() => {
-        const handleToken = async () => {
-            const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/tokens`)
-            const res = await req.json();
-            setToken(res)
-        }
-        handleToken();
-    }, [])
-
-    const isLogin = token.tokens
-    // console.log(isLogin)
-    // 
+    const value = useContext(AuthContext)
 
     return (
         <Box sx={{ flexGrow: 1, mb: 1 }}>
             <AppBar position="sticky" color="primary" elevation={0}>
                 <Toolbar>
                     <Link href="/" passHref >
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                            Student Portal
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer', display: 'inline-block' }}>
+                            {value}
                         </Typography>
                     </Link>
-                    {isLogin ?
-                        (<Button color="inherit" variant="outlined"><Typography>
-                            Halo, User
-                        </Typography></Button>)
-                        : (<>
-                            <Link href="/auth/login" passHref><Button sx={{ mr: 1 }} color="inherit" >Login</Button></Link>
-                            <Link href="/auth/signup" passHref><Button color="inherit" variant="outlined">Sign up</Button></Link>
-                        </>)}
+                    <Link href="/auth/login" passHref><Button sx={{ mr: 1 }} color="inherit" >Login</Button></Link>
+                    <Link href="/auth/signup" passHref><Button color="inherit" variant="outlined">Sign up</Button></Link>
                 </Toolbar>
             </AppBar>
         </Box>

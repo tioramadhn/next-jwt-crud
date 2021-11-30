@@ -17,20 +17,17 @@ export default async function handler(req, res) {
 
                 res.status(200).json({ success: true, data: Users })
             } catch (error) {
-                res.status(400).json({ success: false });
+                res.status(400).json({ success: false, message: "Data gagal didapatkan" });
             }
             break;
         case 'POST':
             try {
                 const user = await User.create(req.body);
-                const token = createToken(user._id);
-                // cookie.set('token', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                res.setHeader('Set-Cookie', serialize('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path: '/' }));
-                // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-                res.status(201).json({ success: true, user: user.id, token, message: 'User berhasil ditambahkan' })
+                // const token = createToken(user._id);
+                // res.setHeader('Set-Cookie', serialize('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV !== "development", maxAge: maxAge * 1000, path: '/' }));
+                res.status(201).json({ success: true, message: 'User berhasil ditambahkan' })
             } catch (error) {
-                const err = handleErrors(error);
-                res.status(400).json({ success: false, error: err });
+                res.status(400).json({ success: false, errors: handleErrors(error) });
             }
             break;
         default:

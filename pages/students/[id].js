@@ -1,29 +1,10 @@
 import { Button, Grid, Stack, TextField, Typography, Alert, Snackbar } from "@mui/material";
 import { useState } from 'react'
 import Head from 'next/head'
-import Router from 'next/router'
-
-
-export const getServerSideProps = async (ctx) => {
-    const token = ctx.req.cookies.jwt;
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
-    const { query } = ctx;
-    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${query.id}`)
-    const res = await req.json();
-    // console.log(res)
-    return {
-        props: { student: res.data || '' }
-    }
-}
+import { useRouter } from 'next/router'
 
 export default function EditStudent({ student }) {
+    const Router = useRouter();
     const [field, setField] = useState({})
     const [status, setStatus] = useState({
         isError: false,
@@ -48,7 +29,6 @@ export default function EditStudent({ student }) {
             },
             body: JSON.stringify(field)
         })
-        console.log(req)
         if (!req.ok) return setStatus({ ...status, isError: true })
         const res = await req.json();
 
@@ -88,3 +68,21 @@ export default function EditStudent({ student }) {
     )
 }
 
+export const getServerSideProps = async (ctx) => {
+
+    const token = ctx.req.cookies.jwt;
+    if (!token) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+    const { query } = ctx;
+    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${query.id}`)
+    const res = await req.json();
+    return {
+        props: { student: res.data || '' }
+    }
+}

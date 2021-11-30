@@ -4,15 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid, Skeleton } from '@mui/material';
-import Router from 'next/router'
-
+import { useRouter } from 'next/router'
 
 
 export default function BasicCard({ nama, nim, jurusan, isLoading, id }) {
-    const handleDetail = () => {
-        Router.push(`/students/${id}`)
-    }
+    const router = useRouter();
 
+    const handleDetail = (e) => {
+        e.preventDefault();
+        router.push(`/students/${id}`)
+    }
 
     return (
         <Grid item xs={12} md={4} lg={3}>
@@ -29,7 +30,7 @@ export default function BasicCard({ nama, nim, jurusan, isLoading, id }) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    {isLoading ? <Skeleton width={"20%"} /> : <Button onClick={() => handleDetail()} size="small">Edit</Button>}
+                    {isLoading ? <Skeleton width={"20%"} /> : <Button onClick={(e) => handleDetail(e)} size="small">Edit</Button>}
                 </CardActions>
             </Card>
         </Grid>

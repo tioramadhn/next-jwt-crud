@@ -1,5 +1,6 @@
 import dbConnect from '../../../utils/dbConnect';
 import Student from '../../../models/Student';
+import handleErrors from '../../../utils/handleErrors'
 
 dbConnect();
 
@@ -19,8 +20,8 @@ export default async function handler(req, res) {
                 }
 
                 res.status(200).json({ success: true, data: getStudentById });
-            } catch (error) {
-                res.status(400).json({ success: false });
+            } catch (err) {
+                res.status(400).json({ message: "Data tidak ditemukan" });
             }
             break;
         case 'PUT':
@@ -31,12 +32,11 @@ export default async function handler(req, res) {
                 });
 
                 if (!editStudent) {
-                    return res.status(400).json({ success: false });
+                    return res.status(400).json({ message: "Data tidak ada yang di ubah" });
                 }
-
-                res.status(200).json({ success: true, data: editStudent });
+                res.status(200).json({ message: "Data berhasil di update" });
             } catch (error) {
-                res.status(400).json({ success: false });
+                res.status(400).json({ errors: handleErrors(error) });
             }
             break;
         case 'DELETE':
@@ -44,12 +44,12 @@ export default async function handler(req, res) {
                 const deletedStudent = await Student.deleteOne({ _id: id });
 
                 if (!deletedStudent) {
-                    return res.status(400).json({ success: false })
+                    return res.status(400).json({ message: "Data gagal dihapus" })
                 }
 
                 res.status(200).json({ success: true, data: {} });
             } catch (error) {
-                res.status(400).json({ success: false })
+                res.status(400).json({ message: "Data gagal di hapus" })
             }
             break;
         default:

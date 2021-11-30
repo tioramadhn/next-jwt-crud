@@ -1,9 +1,8 @@
 import Layout from '../components/Layout'
 import '../styles/globals.css'
-import { store } from '../redux/store'
-import { Provider } from 'react-redux'
 import { orange, pink } from '@mui/material/colors';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
+import AuthProvider from '../stores/authContext';
 
 let myTheme = createTheme({
   palette: {
@@ -19,11 +18,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={myTheme}>
-      <Provider store={store}>
+      <AuthProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </Provider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

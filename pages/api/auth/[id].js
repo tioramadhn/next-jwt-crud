@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
                 res.status(200).json({ success: true, data: getUserById });
             } catch (error) {
-                res.status(400).json({ success: false });
+                res.status(400).json({ message: "Data tidak ditemukan" });
             }
             break;
         case 'PUT':
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
                 res.status(200).json({ success: true, data: editUser, message: "User berhasil di update" });
             } catch (error) {
-                res.status(400).json({ success: false });
+                res.status(400).json({ message: "User gagal di update" });
             }
             break;
         case 'DELETE':
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
                 res.status(200).json({ success: true, data: {}, message: "User berhasil dihapus" });
             } catch (error) {
-                res.status(400).json({ success: false })
+                res.status(400).json({ message: "User gagal dihapus" })
             }
             break;
         default:

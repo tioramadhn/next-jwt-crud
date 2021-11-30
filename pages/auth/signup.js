@@ -1,15 +1,17 @@
 import { Button, Grid, Stack, TextField, Typography, Snackbar, Alert } from "@mui/material";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
+import { Box } from "@mui/system";
+import useSWR from 'swr'
 
 export default function Signup({ }) {
+    const Router = useRouter();
     const [field, setField] = useState({})
-    const [status, setStatus] = useState({
-        isError: false,
-        isLoading: false,
-        isSuccess: false
-    })
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [status, setStatus] = useState('')
 
 
     const handleChange = (e) => {
@@ -18,52 +20,56 @@ export default function Signup({ }) {
             [e.target.name]: e.target.value
         })
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        setStatus({ ...status, isLoading: true })
-
-        const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth`, {
+    const fetcher = async (e) => {
+        setLoading(true)
+        const req = await fetch(e, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(field)
-        });
-
-        if (!req.ok) return setStatus({ ...status, isError: true })
-
+        })
         const res = await req.json();
-        setStatus({ ...status, isLoading: false })
-        setStatus({ ...status, isSuccess: true })
-
-        if (status.isSuccess) Router.push(`${process.env.NEXT_PUBLIC_ORIGIN}`);
-        // console.log(res)
-
-
-        setTimeout(() => {
-            setStatus({
-                isError: false,
-                isLoading: false,
-                isSuccess: false
-            })
-        }, 5000)
+        if (!res.success) {
+            setStatus(res.errors)
+            return setError(true);
+        }
+        setLoading(false)
+        setStatus(res.message)
+        // console.log(status)
+        setSuccess(true)
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        fetcher(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth`);
+    }
+
+    const handleResetStatus = () => {
+        setLoading(false)
+        setError(false)
+        setSuccess(false)
+    }
 
     return (
         <>
             <Head>
                 <title>Signup</title>
             </Head>
-            {status.isSuccess && <Snackbar open={true}><Alert severity="success" elevation={3}>Berhasil Login</Alert></Snackbar>}
-            <Grid container>
-                <Grid item xs={12}>
+            <Grid container justifyContent='center'>
+                <Typography variant="h3" textAlign='center' gutterBottom>🍕Sign up</Typography>
+                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Stack spacing={2} sx={{ width: 300 }}>
-                        {status.isError && <Alert severity="error">Gagal Login</Alert>}
-                        <TextField name="email" label="Email" type="text" onChange={(e) => handleChange(e)} />
-                        <TextField name="password" label="Password" type="password" onChange={(e) => handleChange(e)} />
-                        <Button variant='contained' onClick={(e) => handleSubmit(e)}>Simpan</Button>
+                        {success && <Alert severity="success">Berhasil daftar! Silahkan login</Alert>}
+                        <Box >
+                            <TextField sx={{ width: '100%' }} name="email" label="Email" type="text" onFocus={handleResetStatus} onChange={(e) => handleChange(e)} />
+                            {error && <Typography variant="subtitle2" color="error">{status.email}</Typography>}
+                        </Box>
+                        <Box>
+                            <TextField sx={{ width: '100%' }} name="password" label="Password" type="password" onFocus={handleResetStatus} onChange={(e) => handleChange(e)} />
+                            {error && <Typography variant="subtitle2" color="error">{status.password}</Typography>}
+                        </Box>
+                        <Button disabled={loading} variant='contained' onClick={(e) => handleSubmit(e)}>Simpan</Button>
                     </Stack>
                 </Grid>
             </Grid>

@@ -1,8 +1,6 @@
 import { Grid, Skeleton } from '@mui/material';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 import BasicCard from '../../components/Card';
-import { useGetStudentsQuery } from '../../redux/services/studentService';
 
 export const getServerSideProps = async (ctx) => {
     const token = ctx.req.cookies.jwt;
@@ -14,23 +12,14 @@ export const getServerSideProps = async (ctx) => {
             },
         }
     }
-    // const { data, isError, isLoading } = useGetStudentsQuery('');
     const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`)
     const res = await req.json()
-    // console.log(res);
     return {
         props: { data: res.data }
     }
 }
 
 export default function Students({ data }) {
-    // const [student, setStudent] = useState([]);
-
-
-    // useEffect(() => {
-    //     if (data) setStudent(data.data);
-    // }, [data, student])
-
 
     return (
         <>
