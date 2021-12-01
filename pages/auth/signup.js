@@ -31,18 +31,18 @@ export default function Signup({ }) {
         })
         const res = await req.json();
         if (!res.success) {
+            setLoading(false)
             setStatus(res.errors)
             return setError(true);
         }
         setLoading(false)
         setStatus(res.message)
-        // console.log(status)
         setSuccess(true)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        fetcher(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth`);
+        fetcher(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth/signup`);
     }
 
     const handleResetStatus = () => {
@@ -79,17 +79,7 @@ export default function Signup({ }) {
 
 
 export const getServerSideProps = async (ctx) => {
-    const token = ctx.req.cookies.jwt;
-    if (token) {
-        return {
-            redirect: {
-                destination: `${process.env.NEXT_PUBLIC_ORIGIN}`,
-                permanent: false,
-            },
-        }
-    }
-
     return {
-        props: { isLogin: token ? true : false }
+        props: {}
     }
 }

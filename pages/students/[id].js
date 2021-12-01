@@ -44,7 +44,6 @@ export default function EditStudent({ student }) {
             Router.push('/students')
         }, 1000)
     }
-    // console.log(student)
     return (
         <>
             <Head>
@@ -68,21 +67,10 @@ export default function EditStudent({ student }) {
     )
 }
 
-export const getServerSideProps = async (ctx) => {
-
-    const token = ctx.req.cookies.jwt;
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
-    const { query } = ctx;
-    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${query.id}`)
-    const res = await req.json();
+export const getServerSideProps = async ({ query: { id } }) => {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${id}`)
+    const { data } = await req.json();
     return {
-        props: { student: res.data || '' }
+        props: { student: data || '' }
     }
 }

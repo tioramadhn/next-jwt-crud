@@ -1,26 +1,9 @@
-import { Grid, Skeleton } from '@mui/material';
+import { Grid } from '@mui/material';
 import Head from 'next/head';
 import BasicCard from '../../components/Card';
 
-export const getServerSideProps = async (ctx) => {
-    const token = ctx.req.cookies.jwt;
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
-    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`)
-    const res = await req.json()
-    return {
-        props: { data: res.data }
-    }
-}
 
 export default function Students({ data }) {
-
     return (
         <>
             <Head>
@@ -36,3 +19,19 @@ export default function Students({ data }) {
     )
 }
 
+
+export const getServerSideProps = async (ctx) => {
+    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`)
+    const { data } = await req.json()
+    if (!data) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/auth/login"
+            }
+        }
+    }
+    return {
+        props: { data: data }
+    }
+}

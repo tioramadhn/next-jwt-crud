@@ -1,9 +1,10 @@
 import Student from '../../../models/Student';
 import handleErrors from '../../../utils/handleErrors'
 import dbConnect from '../../../utils/dbConnect';
+import { authenticated } from '../../../middleware/authMiddleware';
 dbConnect();
 
-export default async function handler(req, res) {
+async function handler(req, res) {
 
     const { method } = req;
 
@@ -30,3 +31,4 @@ export default async function handler(req, res) {
             break;
     }
 }
+export default authenticated(handler)
