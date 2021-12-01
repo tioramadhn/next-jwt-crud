@@ -9,7 +9,7 @@ export const AuthContext = createContext({
 });
 
 const AuthProvider = ({ children }) => {
-    const cookies = "NextJWTCRUD-APP"
+    const cookies = "Student Portal"
     return (
         <AuthContext.Provider value={cookies}>
             {children}

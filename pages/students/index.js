@@ -21,8 +21,13 @@ export default function Students({ data }) {
 
 
 export const getServerSideProps = async (ctx) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`)
-    const { data } = await req.json()
+    const { cookie } = ctx.req.headers
+    const response = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students`, {
+        headers: {
+            cookie
+        }
+    })
+    const { data } = await response.json()
     if (!data) {
         return {
             redirect: {

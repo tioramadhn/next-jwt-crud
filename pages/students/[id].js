@@ -67,9 +67,14 @@ export default function EditStudent({ student }) {
     )
 }
 
-export const getServerSideProps = async ({ query: { id } }) => {
-    const req = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${id}`)
-    const { data } = await req.json();
+export const getServerSideProps = async ({ query: { id }, req }) => {
+    const { cookie } = req.headers
+    const response = await fetch(`${process.env.NEXT_PUBLIC_ORIGIN}/api/students/${id}`, {
+        headers: {
+            cookie
+        }
+    })
+    const { data } = await response.json();
     return {
         props: { student: data || '' }
     }

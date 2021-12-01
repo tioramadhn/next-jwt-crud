@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from "@mui/system";
-import useSWR from 'swr'
+import { unauthPage } from '../../middleware/authMiddleware'
 
 export default function Login({ }) {
     const router = useRouter();
@@ -32,24 +32,25 @@ export default function Login({ }) {
         const res = await req.json();
         if (!res.success) {
             setLoading(false)
-            setStatus(res.errors)
+            setStatus(res.message)
             return setError(true);
         }
         setLoading(false)
         setStatus(res.message)
         setSuccess(true)
+        Router.push('/students')
+
     }
 
     const handleSubmit = async (e) => {
+        setLoading(false)
+        setError(false)
+        setSuccess(false)
         e.preventDefault()
         fetcher(`${process.env.NEXT_PUBLIC_ORIGIN}/api/auth/login`);
     }
 
-    const handleResetStatus = () => {
-        setLoading(false)
-        setError(false)
-        setSuccess(false)
-    }
+
 
     return (
         <>
@@ -60,14 +61,13 @@ export default function Login({ }) {
                 <Typography variant="h3" textAlign='center' gutterBottom>🍔Login</Typography>
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Stack spacing={2} sx={{ width: 300 }}>
-                        {success && <Alert severity="success">Berhasil daftar! Silahkan login</Alert>}
+                        {success && <Alert severity="success">Berhasil login</Alert>}
+                        {error && <Alert severity="error">{status}</Alert>}
                         <Box >
-                            <TextField sx={{ width: '100%' }} name="email" label="Email" type="text" onFocus={handleResetStatus} onChange={(e) => handleChange(e)} />
-                            {error && <Typography variant="subtitle2" color="error">{status.email}</Typography>}
+                            <TextField sx={{ width: '100%' }} name="email" label="Email" type="text" onChange={(e) => handleChange(e)} />
                         </Box>
                         <Box>
-                            <TextField sx={{ width: '100%' }} name="password" label="Password" type="password" onFocus={handleResetStatus} onChange={(e) => handleChange(e)} />
-                            {error && <Typography variant="subtitle2" color="error">{status.password}</Typography>}
+                            <TextField sx={{ width: '100%' }} name="password" label="Password" type="password" onChange={(e) => handleChange(e)} />
                         </Box>
                         <Button disabled={loading} variant='contained' onClick={(e) => handleSubmit(e)}>Simpan</Button>
                     </Stack>
@@ -79,6 +79,8 @@ export default function Login({ }) {
 
 
 export const getServerSideProps = async (ctx) => {
+    await unauthPage(ctx)
+
     return {
         props: {}
     }

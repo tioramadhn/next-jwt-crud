@@ -13,15 +13,13 @@
     "@mui/icons-material": "^5.2.0",
     "@mui/material": "^5.2.0",
     "bcrypt": "^5.0.1",
-    "cookie-parser": "^1.4.6",
-    "js-cookie": "^3.0.1",
+    "cookie": "^0.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
     "next": "12.0.4",
     "next-cookies": "^2.0.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "swr": "^1.0.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
