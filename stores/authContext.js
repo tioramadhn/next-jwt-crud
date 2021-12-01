@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 
 
 export const AuthContext = createContext({
@@ -9,9 +9,17 @@ export const AuthContext = createContext({
 });
 
 const AuthProvider = ({ children }) => {
-    const cookies = "Student Portal"
+    const [user, setUser] = useState(null)
+
+    const login = (user) => {
+        setUser(user)
+    }
+    const site = "Student Portal"
+
+    const context = { user, site, login }
+
     return (
-        <AuthContext.Provider value={cookies}>
+        <AuthContext.Provider value={context}>
             {children}
         </AuthContext.Provider>
     )

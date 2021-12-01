@@ -22,7 +22,7 @@ async function handler(req, res) {
 
                 res.status(200).json({ success: true, data: getStudentById });
             } catch (err) {
-                res.status(400).json({ message: "Data tidak ditemukan" });
+                res.status(400).json({ success: false, message: "Data tidak ditemukan" });
             }
             break;
         case 'PUT':
@@ -33,11 +33,11 @@ async function handler(req, res) {
                 });
 
                 if (!editStudent) {
-                    return res.status(400).json({ message: "Data tidak ada yang di ubah" });
+                    return res.status(400).json({ success: false, message: "Data tidak ada yang di ubah" });
                 }
-                res.status(200).json({ message: "Data berhasil di update" });
+                res.status(200).json({ success: true, message: "Data berhasil di update" });
             } catch (error) {
-                res.status(400).json({ errors: handleErrors(error) });
+                res.status(400).json({ success: false, errors: handleErrors(error) });
             }
             break;
         case 'DELETE':
@@ -45,12 +45,12 @@ async function handler(req, res) {
                 const deletedStudent = await Student.deleteOne({ _id: id });
 
                 if (!deletedStudent) {
-                    return res.status(400).json({ message: "Data gagal dihapus" })
+                    return res.status(400).json({ success: false, message: "Data gagal dihapus" })
                 }
 
                 res.status(200).json({ success: true, data: {} });
             } catch (error) {
-                res.status(400).json({ message: "Data gagal di hapus" })
+                res.status(400).json({ success: false, message: "Data gagal di hapus" })
             }
             break;
         default:

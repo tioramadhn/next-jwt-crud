@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             sameSite: 'strict',
             path: '/'
         }));
-        res.status(201).json({ success: true, message: 'User berhasil ditambahkan' })
+        res.status(201).json({ success: true, message: 'User berhasil ditambahkan', data })
     } catch (err) {
         res.status(400).json({ success: false, errors: handleErrors(err) });
     }

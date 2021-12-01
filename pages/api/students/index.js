@@ -14,7 +14,7 @@ async function handler(req, res) {
                 const Students = await Student.find({});
                 res.status(200).json({ success: true, data: Students })
             } catch (error) {
-                res.status(400).json({ errors: handleErrors(error) });
+                res.status(400).json({ success: false, errors: handleErrors(error) });
             }
             break;
         case 'POST':
@@ -23,7 +23,7 @@ async function handler(req, res) {
 
                 res.status(201).json({ success: true, data: insertStudent })
             } catch (error) {
-                res.status(400).json({ errors: handleErrors(error) });
+                res.status(400).json({ success: false, errors: handleErrors(error) });
             }
             break;
         default:

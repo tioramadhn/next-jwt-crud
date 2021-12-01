@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from "@mui/system";
-import { useRouter } from 'next/router'
+import { useContext } from 'react';
+import { AuthContext } from '../../stores/authContext';
 
 export default function Login({ }) {
+    const { login } = useContext(AuthContext)
     const router = useRouter();
     const [field, setField] = useState({})
     const [error, setError] = useState(false)
@@ -38,6 +40,7 @@ export default function Login({ }) {
         setLoading(false)
         setStatus(res.message)
         setSuccess(true)
+        login(res.data)
         router.push(`${process.env.NEXT_PUBLIC_ORIGIN}/students`)
     }
 
@@ -77,8 +80,17 @@ export default function Login({ }) {
 }
 
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async ({req}) => {
+    const { auth } = req.cookies
 
+    if (auth) {
+        return {
+            redirect: {
+                destination: `${process.env.NEXT_PUBLIC_ORIGIN}/students`,
+                permanent: false
+            }
+        }
+    }
     return {
         props: {}
     }

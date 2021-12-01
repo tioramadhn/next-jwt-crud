@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from "@mui/system";
-import { useRouter } from 'next/router'
 
 
 export default function Signup({ }) {
@@ -39,6 +38,7 @@ export default function Signup({ }) {
         setLoading(false)
         setStatus(res.message)
         setSuccess(true)
+        res.data
         router.push(`${process.env.NEXT_PUBLIC_ORIGIN}/students`)
 
     }
@@ -81,7 +81,17 @@ export default function Signup({ }) {
 }
 
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async ({ req }) => {
+    const { auth } = req.cookies
+
+    if (auth) {
+        return {
+            redirect: {
+                destination: `${process.env.NEXT_PUBLIC_ORIGIN}/students`,
+                permanent: false
+            }
+        }
+    }
     return {
         props: {}
     }
