@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from "@mui/system";
-import { unauthPage } from '../../middleware/authMiddleware'
+import { useRouter } from 'next/router'
 
 export default function Login({ }) {
     const router = useRouter();
@@ -38,8 +38,7 @@ export default function Login({ }) {
         setLoading(false)
         setStatus(res.message)
         setSuccess(true)
-        Router.push('/students')
-
+        router.push(`${process.env.NEXT_PUBLIC_ORIGIN}/students`)
     }
 
     const handleSubmit = async (e) => {
@@ -79,7 +78,6 @@ export default function Login({ }) {
 
 
 export const getServerSideProps = async (ctx) => {
-    await unauthPage(ctx)
 
     return {
         props: {}

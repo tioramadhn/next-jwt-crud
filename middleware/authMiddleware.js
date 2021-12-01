@@ -10,15 +10,3 @@ export const authenticated = (fn) => async (req, res) => {
     })
 }
 
-export function unauthPage(ctx) {
-    return new Promise(resolve => {
-        const allCookies = cookies(ctx);
-
-        if (allCookies.auth)
-            return ctx.res.writeHead(302, {
-                Location: `${process.env.NEXT_PUBLIC_ORIGIN}/students`
-            }).end();
-
-        return resolve('unauthorized');
-    });
-}
